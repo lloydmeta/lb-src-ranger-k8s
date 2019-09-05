@@ -17,9 +17,10 @@ package main
 
 import (
 	"flag"
-	"k8s.io/utils/clock"
 	"net/http"
 	"os"
+
+	"k8s.io/utils/clock"
 
 	lbsrcrangerv1beta1 "github.com/lloydmeta/lb-src-ranger-k8s/api/v1beta1"
 	"github.com/lloydmeta/lb-src-ranger-k8s/controllers"

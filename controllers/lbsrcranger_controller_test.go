@@ -19,32 +19,6 @@ var _ = Context("Inside of a new namespace", func() {
 	ctx := context.TODO()
 	ns := setupTest(ctx)
 
-	//Describe("when no existing resources exist", func() {
-	//
-	//	It("should create a new LbSrcRanger resource with the specified name", func() {
-	//		createRanger := &v1beta1.LbSrcRanger{
-	//			ObjectMeta: metav1.ObjectMeta{
-	//				Name:      "lbsrcranger-test",
-	//				Namespace: ns.Name,
-	//			},
-	//			Spec: v1beta1.LbSrcRangerSpec{
-	//				TargetLabels: map[string]string{"hello": "world"},
-	//				UpdateEvery:  metav1.Duration{Duration: time.Minute},
-	//				SrcIPUrls:    []string{mockSrcServerUrl},
-	//			},
-	//		}
-	//		err := k8sClient.Create(ctx, createRanger)
-	//		Expect(err).NotTo(HaveOccurred(), "failed to create test LbSrcRanger resource")
-	//
-	//		retrievedRanger := &v1beta1.LbSrcRanger{}
-	//		Eventually(
-	//			getResourceFunc(ctx, client.ObjectKey{Name: createRanger.Name, Namespace: createRanger.Namespace}, retrievedRanger),
-	//			time.Second*5, time.Millisecond*500).Should(BeNil())
-	//
-	//		Expect(retrievedRanger.Spec.TargetLabels).To(Equal(createRanger.Spec.TargetLabels))
-	//	})
-	//})
-
 	Describe("updating services", func() {
 
 		It("should update existing services with the right labels", func() {
@@ -66,12 +40,6 @@ var _ = Context("Inside of a new namespace", func() {
 			}
 			err := k8sClient.Create(ctx, createService)
 			Expect(err).NotTo(HaveOccurred(), "failed to create service")
-
-			//retrievedService := &v1.Service{}
-			//Eventually(
-			//	getResourceFunc(ctx, client.ObjectKey{Name: createService.Name, Namespace: createService.Namespace}, retrievedService),
-			//	time.Second*5, time.Millisecond*500).Should(BeNil())
-			//Expect(retrievedService.Spec.LoadBalancerSourceRanges).To(BeEmpty())
 
 			createRanger := &v1beta1.LbSrcRanger{
 				ObjectMeta: metav1.ObjectMeta{

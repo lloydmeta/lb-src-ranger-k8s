@@ -18,6 +18,18 @@ before_script:
   - |
     os=$(go env GOOS)
     arch=$(go env GOARCH)
+    version=3.1.0
+
+    curl -O -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${version}/kustomize_${version}_${os}_${arch}
+
+    mv kustomize_*_${os}_${arch} kustomize
+    chmod u+x kustomize
+
+    sudo mv kustomize /usr/local/bin
+    export PATH=$PATH:/usr/local/bin
+  - |
+    os=$(go env GOOS)
+    arch=$(go env GOARCH)
 
     curl -sL https://go.kubebuilder.io/dl/2.0.0/${os}/${arch} | tar -xz -C /tmp/
 

@@ -1,6 +1,6 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= lloydmeta/lb-src-ranger-k8s:0.1.1
+IMG ?= lloydmeta/lb-src-ranger-k8s:0.1.2-SNAPSHOT
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:trivialVersions=true"
 
@@ -12,7 +12,7 @@ GOBIN=$(shell go env GOBIN)
 endif
 
 ci-check: generate vet manifests
-	go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+	go test -v -race -coverprofile=cover.out -covermode=atomic ./...
 
 all: manager
 
@@ -34,7 +34,6 @@ install: manifests
 
 # Deploy controller in the configured Kubernetes cluster in ~/.kube/config
 deploy: manifests
-	cd config/manager && kustomize edit set image controller=${IMG}
 	kustomize build config/default | kubectl apply -f -
 
 create-install-yaml: manifests
@@ -42,6 +41,7 @@ create-install-yaml: manifests
 
 # Generate manifests e.g. CRD, RBAC etc.
 manifests: controller-gen
+	cd config/manager && kustomize edit set image controller=${IMG}
 	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases
 
 # Run go fmt against code

@@ -123,6 +123,16 @@ metadata:
   name: lb-src-ranger-k8s-manager-role
 rules:
 - apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
   - lbsrcranger.beachape.com
   resources:
   - lbsrcrangers
@@ -140,16 +150,6 @@ rules:
   - lbsrcrangers/status
   verbs:
   - get
-  - patch
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - services
-  verbs:
-  - get
-  - watch
-  - list
   - patch
   - update
 ---
@@ -263,7 +263,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: lloydmeta/lb-src-ranger-k8s:0.1.1
+        image: lloydmeta/lb-src-ranger-k8s:0.1.2-SNAPSHOT
         name: manager
         resources:
           limits:
