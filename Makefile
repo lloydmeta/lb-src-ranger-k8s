@@ -55,6 +55,7 @@ vet:
 
 # Generate code
 generate: controller-gen
+	ls
 	$(CONTROLLER_GEN) object:headerFile=./hack/boilerplate.go.txt paths="./..."
 
 # Build the docker image
@@ -69,7 +70,7 @@ docker-push:
 # download controller-gen if necessary
 controller-gen:
 ifeq (, $(shell which controller-gen))
-	go get sigs.k8s.io/controller-tools/cmd/controller-gen
+	GO111MODULE=on go get sigs.k8s.io/controller-tools/cmd/controller-gen
 CONTROLLER_GEN=$(GOBIN)/controller-gen
 else
 CONTROLLER_GEN=$(shell which controller-gen)
