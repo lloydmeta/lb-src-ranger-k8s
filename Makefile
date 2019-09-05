@@ -12,7 +12,7 @@ GOBIN=$(shell go env GOBIN)
 endif
 
 ci-check: generate vet manifests
-	go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+	go test -v -race -coverprofile=cover.out -covermode=atomic ./...
 
 all: manager
 
