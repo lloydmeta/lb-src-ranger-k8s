@@ -12,9 +12,6 @@ matrix:
     - go: master
   fast_finish: true
 
-before_install:
-  - go mod download
-
 script:
   - make ci-check
 
