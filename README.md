@@ -1,4 +1,5 @@
-# lb-src-ranger
+# lb-src-ranger [![Build Status](https://travis-ci.org/lloydmeta/lb-src-ranger-k8s.svg?branch=master)](https://travis-ci.org/lloydmeta/lb-src-ranger-k8s) [![codecov](https://codecov.io/gh/lloydmeta/lb-src-ranger-k8s/branch/master/graph/badge.svg)](https://codecov.io/gh/lloydmeta/lb-src-ranger-k8s)
+
 
 A k8s CRD that tends to the `loadBalancerSourceRanges` of your `LoadBalancer` services by sourcing the IPs from
 a list of URLs that you specify, targeting your services via labels.
@@ -10,7 +11,7 @@ The URLs should return a list newline-separated CIDRs.
 Install the CRD:
 
 ```shell
-kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/blob/lb-src-ranger.yaml
+kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/lb-src-ranger.yaml
 ```
 
 ### See it in action
@@ -19,10 +20,10 @@ Optionally install the samples:
 
 ```shell
 # Create a LoadBalancer service
-kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/blob/config/samples/dummy-service.yaml
+kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/config/samples/dummy-service.yaml
 
 # Create a LbSrcRanger
-kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/blob/config/samples/lbsrcranger_v1beta1_lbsrcranger.yaml
+kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/config/samples/lbsrcranger_v1beta1_lbsrcranger.yaml
 ```
 
 Get the service to see that its `loadBalancerSourceRanges` has been updated based on the URLs in the ranger.
