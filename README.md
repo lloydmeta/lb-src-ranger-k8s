@@ -11,7 +11,7 @@ The URLs should each return a list newline-separated CIDRs.
 Install the CRD:
 
 ```shell
-kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/lb-src-ranger.yaml
+kubectl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/lb-src-ranger.yaml
 ```
 
 ### See it in action
@@ -20,10 +20,10 @@ Optionally install the samples:
 
 ```shell
 # Create a LoadBalancer service
-kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/config/samples/dummy-service.yaml
+kubectl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/config/samples/dummy-service.yaml
 
 # Create a LbSrcRanger
-kubctl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/config/samples/lbsrcranger_v1beta1_lbsrcranger.yaml
+kubectl apply -f https://raw.githubusercontent.com/lloydmeta/lb-src-ranger-k8s/master/config/samples/lbsrcranger_v1beta1_lbsrcranger.yaml
 ```
 
 Get the service to see that its `loadBalancerSourceRanges` has been updated based on the URLs in the ranger.
