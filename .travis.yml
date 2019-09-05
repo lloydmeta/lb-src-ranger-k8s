@@ -16,6 +16,7 @@ matrix:
   fast_finish: true
 
 script:
+  - diff -u <(echo -n) <(gofmt -d -s .)
   - make ci-check
 
 after_success:
