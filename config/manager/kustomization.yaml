@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: lloydmeta/lb-src-ranger-k8s
-  newTag: 0.1.18-SNAPSHOT
+  newTag: 0.1.1
