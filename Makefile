@@ -11,8 +11,7 @@ else
 GOBIN=$(shell go env GOBIN)
 endif
 
-ci-check: generate fmt vet manifests
-	diff -u <(echo -n) <(gofmt -d -s .)
+ci-check: generate vet manifests
 	go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
 all: manager
