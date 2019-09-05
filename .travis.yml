@@ -23,9 +23,10 @@ before_script:
     curl -O -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${version}/kustomize_${version}_${os}_${arch}
 
     mv kustomize_*_${os}_${arch} kustomize
-
     chmod u+x kustomize
-    sudo mv kustomize /usr/local/bin/kustomize
+
+    sudo mv kustomize /usr/local/bin
+    export PATH=$PATH:/usr/local/bin
   - |
     os=$(go env GOOS)
     arch=$(go env GOARCH)
