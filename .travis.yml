@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 
 language: go
 
@@ -13,7 +13,11 @@ matrix:
   fast_finish: true
 
 before_script:
-  - GO111MODULE=on go get sigs.k8s.io/controller-tools/cmd/controller-gen@v0.2.0
+  - os=$(go env GOOS) && \
+    arch=$(go env GOARCH) && \
+    curl -sL https://go.kubebuilder.io/dl/2.0.0/${os}/${arch} | tar -xz -C /tmp/ && \
+    sudo mv /tmp/kubebuilder_2.0.0_${os}_${arch} /usr/local/kubebuilder && \
+    export PATH=$PATH:/usr/local/kubebuilder/bin
 
 script:
   - make ci-check
