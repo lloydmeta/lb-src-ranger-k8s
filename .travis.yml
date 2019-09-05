@@ -25,7 +25,7 @@ before_script:
     mv kustomize_*_${os}_${arch} kustomize
 
     chmod u+x kustomize
-    sudo mv kustomize /usr/local/kustomize
+    sudo mv kustomize /usr/local/bin/kustomize
   - |
     os=$(go env GOOS)
     arch=$(go env GOARCH)
