@@ -8,12 +8,15 @@ go:
   - master
 
 env:
-  - GO111MODULE=on
+  - GO111MODULE=on,KUBEBUILDER_CONTROLPLANE_START_TIMEOUT=600s
 
 matrix:
   allow_failures:
     - go: master
   fast_finish: true
+
+before_script:
+  - go get -v go.etcd.io/etcd
 
 script:
   - diff -u <(echo -n) <(gofmt -d -s .)
