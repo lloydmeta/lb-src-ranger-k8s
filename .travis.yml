@@ -18,8 +18,9 @@ before_script:
   - |
     os=$(go env GOOS)
     arch=$(go env GOARCH)
+    version=3.1.0
 
-    curl -sL https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_${os}_${arch}
+    curl -O -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${version}/kustomize_${version}_${os}_${arch}
 
     mv kustomize_*_${os}_${arch} kustomize
 
