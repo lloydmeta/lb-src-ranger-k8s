@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 
 language: go
 
@@ -16,7 +16,14 @@ matrix:
   fast_finish: true
 
 before_script:
-  - go get -v go.etcd.io/etcd
+  - |
+    os=$(go env GOOS)
+    arch=$(go env GOARCH)
+
+    curl -sL https://go.kubebuilder.io/dl/2.0.0/${os}/${arch} | tar -xz -C /tmp/
+
+    sudo mv /tmp/kubebuilder_2.0.0_${os}_${arch} /usr/local/kubebuilder
+    export PATH=$PATH:/usr/local/kubebuilder/bin
 
 script:
   - diff -u <(echo -n) <(gofmt -d -s .)
