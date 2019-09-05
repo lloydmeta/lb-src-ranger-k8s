@@ -32,6 +32,7 @@ rules:
   - services
   verbs:
   - get
+  - watch
   - list
   - patch
   - update

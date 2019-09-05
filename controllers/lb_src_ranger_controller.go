@@ -53,7 +53,7 @@ func MkLbSrcRangerController(
 
 // +kubebuilder:rbac:groups=lbsrcranger.beachape.com,resources=lbsrcrangers,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=lbsrcranger.beachape.com,resources=lbsrcrangers/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups="",resources=services,verbs=get;list;update;patch
+// +kubebuilder:rbac:groups="",resources=services,verbs=get;list;watch;update;patch;
 func (r *LbSrcRangerController) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
 	id := domain.LbSrcRangerId(req.NamespacedName)
