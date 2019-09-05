@@ -13,8 +13,8 @@ matrix:
   fast_finish: true
 
 before_script:
-  - os=$(go env GOOS) && \
-    arch=$(go env GOARCH) && \
+  - export os=$(go env GOOS) && \
+    export arch=$(go env GOARCH) && \
     curl -sL https://go.kubebuilder.io/dl/2.0.0/${os}/${arch} | tar -xz -C /tmp/ && \
     sudo mv /tmp/kubebuilder_2.0.0_${os}_${arch} /usr/local/kubebuilder && \
     export PATH=$PATH:/usr/local/kubebuilder/bin
