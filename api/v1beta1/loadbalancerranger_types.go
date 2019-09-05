@@ -55,7 +55,7 @@ type LbSrcRangerStatus struct {
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 
-// LbSrcRanger is the Schema for the loadbalancerrangers API
+// LbSrcRanger is the Schema for the lbsrcrangers API
 type LbSrcRanger struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

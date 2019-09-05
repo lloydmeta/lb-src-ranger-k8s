@@ -9,7 +9,7 @@ rules:
 - apiGroups:
   - lbsrcranger.beachape.com
   resources:
-  - loadbalancerrangers
+  - lbsrcrangers
   verbs:
   - create
   - delete
@@ -21,7 +21,7 @@ rules:
 - apiGroups:
   - lbsrcranger.beachape.com
   resources:
-  - loadbalancerrangers/status
+  - lbsrcrangers/status
   verbs:
   - get
   - patch

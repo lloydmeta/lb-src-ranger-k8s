@@ -20,7 +20,7 @@ spec:
     status: {}
   validation:
     openAPIV3Schema:
-      description: LbSrcRanger is the Schema for the loadbalancerrangers API
+      description: LbSrcRanger is the Schema for the lbsrcrangers API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -125,7 +125,7 @@ rules:
 - apiGroups:
   - lbsrcranger.beachape.com
   resources:
-  - loadbalancerrangers
+  - lbsrcrangers
   verbs:
   - create
   - delete
@@ -137,7 +137,7 @@ rules:
 - apiGroups:
   - lbsrcranger.beachape.com
   resources:
-  - loadbalancerrangers/status
+  - lbsrcrangers/status
   verbs:
   - get
   - patch
