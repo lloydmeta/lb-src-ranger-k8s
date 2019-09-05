@@ -1,0 +1,274 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: lb-src-ranger-k8s-system
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: lbsrcrangers.lbsrcranger.beachape.com
+spec:
+  group: lbsrcranger.beachape.com
+  names:
+    kind: LbSrcRanger
+    plural: lbsrcrangers
+  scope: ""
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: LbSrcRanger is the Schema for the loadbalancerrangers API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: LbSrcRangerSpec defines the desired state of LbSrcRanger
+          properties:
+            src_ip_urls:
+              description: SrcIpUrls holds urls that return newline-separated lists
+                of IP address (ranges) to use as source ip ranges in the selected
+                LoadBalancer serviceds
+              items:
+                type: string
+              type: array
+            target_labels:
+              additionalProperties:
+                type: string
+              description: TargetLabels is a selector for finding LoadBalancer Services
+                that need tending-to
+              type: object
+            update_every:
+              description: UpdateEvery is the duration to wait between reconciles
+              type: string
+          required:
+          - update_every
+          type: object
+        status:
+          description: LbSrcRangerStatus defines the observed state of LbSrcRanger
+          properties:
+            last_run_at:
+              description: LastRunAt is the time that there was a load balancer run
+              format: date-time
+              type: string
+            last_updated_count:
+              description: UpdatedCount is the number of servies last updated
+              type: integer
+          required:
+          - last_run_at
+          - last_updated_count
+          type: object
+      type: object
+  version: v1beta1
+  versions:
+  - name: v1beta1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: lb-src-ranger-k8s-leader-election-role
+  namespace: lb-src-ranger-k8s-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: lb-src-ranger-k8s-manager-role
+rules:
+- apiGroups:
+  - lbsrcranger.beachape.com
+  resources:
+  - loadbalancerrangers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - lbsrcranger.beachape.com
+  resources:
+  - loadbalancerrangers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - lbsrcranger.beachape.com
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: lb-src-ranger-k8s-proxy-role
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: lb-src-ranger-k8s-leader-election-rolebinding
+  namespace: lb-src-ranger-k8s-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: lb-src-ranger-k8s-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: lb-src-ranger-k8s-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: lb-src-ranger-k8s-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: lb-src-ranger-k8s-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: lb-src-ranger-k8s-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: lb-src-ranger-k8s-proxy-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: lb-src-ranger-k8s-proxy-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: lb-src-ranger-k8s-system
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/port: "8443"
+    prometheus.io/scheme: https
+    prometheus.io/scrape: "true"
+  labels:
+    control-plane: controller-manager
+  name: lb-src-ranger-k8s-controller-manager-metrics-service
+  namespace: lb-src-ranger-k8s-system
+spec:
+  ports:
+  - name: https
+    port: 8443
+    targetPort: https
+  selector:
+    control-plane: controller-manager
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: lb-src-ranger-k8s-controller-manager
+  namespace: lb-src-ranger-k8s-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+    spec:
+      containers:
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=10
+        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+      - args:
+        - --metrics-addr=127.0.0.1:8080
+        - --enable-leader-election
+        command:
+        - /manager
+        image: lloydmeta/lb-src-ranger-k8s:0.1.18-SNAPSHOT
+        name: manager
+        resources:
+          limits:
+            cpu: 100m
+            memory: 30Mi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+      terminationGracePeriodSeconds: 10

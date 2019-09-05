@@ -1,0 +1,11 @@
+apiVersion: lbsrcranger.beachape.com/v1beta1
+kind: LbSrcRanger
+metadata:
+  name: lbsrcranger-sample
+spec:
+  # Add fields here
+  target_labels:
+    ip_src: "cloudflare"
+  update_every: 1m
+  src_ip_urls:
+    - "https://www.cloudflare.com/ips-v4"

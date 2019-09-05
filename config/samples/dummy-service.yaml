@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dummy
+  labels:
+    ip_src: "cloudflare"
+spec:
+  ports:
+    - port: 80
+      targetPort: dummy-http
+  selector:
+    app: dummy
+  type: LoadBalancer

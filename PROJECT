@@ -1,0 +1,7 @@
+version: "2"
+domain: beachape.com
+repo: github.com/lloydmeta/lb-src-ranger-k8s
+resources:
+- group: lbsrcranger
+  version: v1beta1
+  kind: LoadBalancerRanger
