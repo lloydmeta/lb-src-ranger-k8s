@@ -263,7 +263,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: lloydmeta/lb-src-ranger-k8s:0.1.2-SNAPSHOT
+        image: lloydmeta/lb-src-ranger-k8s:0.1.2
         name: manager
         resources:
           limits:

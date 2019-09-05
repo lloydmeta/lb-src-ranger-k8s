@@ -1,6 +1,6 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= lloydmeta/lb-src-ranger-k8s:0.1.2-SNAPSHOT
+IMG ?= lloydmeta/lb-src-ranger-k8s:0.1.2
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:trivialVersions=true"
 
