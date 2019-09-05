@@ -24,6 +24,8 @@ before_script:
       xargs curl -O -L
     mv kustomize_*_${opsys}_amd64 kustomize
     chmod u+x kustomize
+    mv kustomize /usr/local/bin
+    export PATH=$PATH:/usr/local/bin
   - |
     os=$(go env GOOS)
     arch=$(go env GOARCH)
