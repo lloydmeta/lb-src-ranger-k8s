@@ -27,7 +27,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - lbsrcranger.beachape.com
+  - ""
   resources:
   - services
   verbs:
