@@ -4,7 +4,7 @@
 A k8s CRD that tends to the `loadBalancerSourceRanges` of your `LoadBalancer` services by sourcing the IPs from
 a list of URLs that you specify, targeting your services via labels.
 
-The URLs should return a list newline-separated CIDRs.
+The URLs should each return a list newline-separated CIDRs.
 
 ## Install
 
@@ -30,5 +30,6 @@ Get the service to see that its `loadBalancerSourceRanges` has been updated base
 
 ## Dev Requirements
 
-1. `kubectl` + `kubernetes`
-2. `kustomize`
+1. `kubectl` + `kubernetes` https://kubernetes.io/
+2. `kustomize` https://kustomize.io/
+3. `kubebuilder` https://kubebuilder.io/
